@@ -1,3 +1,4 @@
+/* eslint-env node */
 'use strict';
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
@@ -5,7 +6,23 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 module.exports = function(defaults) {
   let app = new EmberApp(defaults, {
     // Add options here
+    'ember-cli-bootstrap-sassy': {
+      'glyphicons': false,
+      'quiet': true
+    },
+
+    'ember-cli-string-helpers': {
+      only: ['truncate', 'titleize']
+    },
+
+    babel: {
+      plugins: [
+        ['transform-object-rest-spread']
+      ]
+    }
   });
+
+  app.import('vendor/ember/ember-template-compiler.js');
 
   // Use `app.import` to add additional libraries to the generated
   // output files.

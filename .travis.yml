@@ -1,28 +1,28 @@
 ---
+notifications:
+  email:
+    on_success: never
+    on_failure: never
+
 language: node_js
 node_js:
-  - "8"
+  - "6"
 
 sudo: false
-dist: trusty
-
-addons:
-  chrome: stable
 
 cache:
   directories:
     - $HOME/.npm
 
-env:
-  global:
-    # See https://git.io/vdao3 for details.
-    - JOBS=1
+before_install:
+  - npm config set spin false
+  - npm install -g phantomjs-prebuilt && npm install -g yarn && npm install -g bower
+  - phantomjs --version
+  - bower --version
 
-branches:
-  only:
-    - master
+install:
+  - bower install
+  - yarn
 
 script:
-  - npm run lint:hbs
-  - npm run lint:js
-  - npm test
+  - yarn run build

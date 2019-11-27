@@ -1,15 +1,19 @@
+/* eslint-env node */
 'use strict';
 
 module.exports = function(environment) {
+  const useDb = false;
+
   let ENV = {
-    modulePrefix: 'emberjs-invoice',
+    useDb,
+    modulePrefix: 'ember-invoice-manager',
     environment,
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
-        // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
+        // e.g. 'with-controller': true
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
@@ -20,6 +24,22 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    googleFonts: [
+      'Open+Sans:300,400,700',
+      'Montserrat:300,700'
+    ],
+
+    // highlight.js settings
+    emberHighlightJs: {
+      style: 'monokai-sublime'
+    },
+
+    // Set or update content security policies
+    contentSecurityPolicy: {
+      'font-src': "'self' fonts.gstatic.com",
+      'style-src': "'self' fonts.googleapis.com"
     }
   };
 
@@ -40,12 +60,17 @@ module.exports = function(environment) {
     ENV.APP.LOG_VIEW_LOOKUPS = false;
 
     ENV.APP.rootElement = '#ember-testing';
-    ENV.APP.autoboot = false;
+    ENV.useDb = false;
   }
 
   if (environment === 'production') {
-    // here you can enable a production-specific feature
+    ENV.useDb = false;
   }
+
+  ENV['ember-cli-mirage'] = {
+    directory: 'app/mirage',
+    enabled: !ENV.useDb
+  };
 
   return ENV;
 };
